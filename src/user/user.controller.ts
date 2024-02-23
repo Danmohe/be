@@ -52,6 +52,36 @@ export class UserController {
     }
   }
 
+  @Post('CreateDirectly')
+  @ApiOperation({ summary: 'Creates a user' })
+  @ApiResponse({ status: 700, description: 'Creates a user successfully', })
+  @ApiResponse({ status: 704, description: 'User already exists in the database', })
+  @ApiResponse({ status: 999, description: 'Internal server error', })
+  async createDirectly(@Body() createUserDto: CreateUserDto, @Res() response: Response) {
+    try{
+      const user = await this.userService.createDirectly(createUserDto);
+      return response.json({
+        success: true,
+        responseData: user,
+        messageCode: '700',
+      });
+    }
+    catch (error) {
+      if (error instanceof ConflictException) {
+        return response.json({
+          success: false,
+          responseData: null,
+          messageCode: '704',
+        });
+      }
+      return response.json({
+        success: false,
+        responseData: false,
+        messageCode: '999',
+      });
+    }
+  }
+
   @Post('create')
   @ApiOperation({ summary: 'Creates a user' }) 
   @ApiResponse({status: 700, description: 'Creates a user successfully',})

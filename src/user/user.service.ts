@@ -101,6 +101,19 @@ export class UserService {
     }
   }
 
+  async createDirectly(createUserDto: CreateUserDto): Promise<User> {
+    try{
+      const user = this.userRepository.create(createUserDto);
+      return await this.userRepository.save(user);
+    }
+    catch (error) {
+      if (error instanceof ConflictException) {
+        throw error;
+      }
+      throw new InternalServerErrorException('An unexpected error occurred while creating the user');
+    }
+  }
+
   async removeById(id: string): Promise<Partial<User>> {
     try {
       const userToRemove = await this.userRepository.findOne({ where: { id } });
