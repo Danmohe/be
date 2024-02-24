@@ -7,7 +7,7 @@ import { EmailService } from 'src/email/email.service';
 import { SecurityModule } from 'src/security/security.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User]), SecurityModule],
+  imports: [TypeOrmModule.forFeature([User]), SecurityModule, EmailService],
   providers: [UserService, EmailService],
   exports: [UserService],
 })
