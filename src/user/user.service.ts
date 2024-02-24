@@ -103,10 +103,16 @@ export class UserService {
 
   async createDirectly(createUserDto: CreateUserDto): Promise<User> {
     console.log('createDirectly service');
+    console.log('FRONTEND_URL in service', process.env.FRONTEND_URL);
     console.log(createUserDto.email);
+    
     try{
+      console.log("trying to create the user");
       const user = this.userRepository.create(createUserDto);
+      console.log("trying to save user");
       return await this.userRepository.save(user);
+      
+      
     }
     catch (error) {
       if (error instanceof ConflictException) {
