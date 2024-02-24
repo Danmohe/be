@@ -127,8 +127,12 @@ export class UserService {
     }
     catch (error) {
       if (error instanceof ConflictException) {
+        console.log("ConflictException");
         throw error;
+
       }
+      console.log("Error message", error.message, "just error", error);
+      console.log("Other error 'An unexpected error occurred while creating the user'")
       throw new InternalServerErrorException('An unexpected error occurred while creating the user');
     }
   }
