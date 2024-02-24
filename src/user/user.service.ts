@@ -103,7 +103,7 @@ export class UserService {
 
   async createDirectly(createUserDto: CreateUserDto): Promise<User> {
     console.log('createDirectly service');
-    console.log('FRONTEND_URL in service', process.env.FRONTEND_URL);
+    console.log('DB-url in service', process.env.DATABASE_URL);
     console.log(createUserDto.email);
     
     try{
