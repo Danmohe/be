@@ -102,6 +102,7 @@ export class UserService {
   }
 
   async createDirectly(firstName: string, lastName: string, email: string, password: string): Promise<User> {
+    console.log('createDirectly service');
     try{
       const hashedPassword= await this.securityService.hashPassword(password);
       const partialUser = { firstName, lastName, email, password: hashedPassword, isActivated: true };

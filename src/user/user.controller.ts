@@ -10,6 +10,7 @@ import { Response } from 'express';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../auth/auth.guard';
+import { log } from 'console';
 
 
 @Controller('users')
@@ -62,7 +63,10 @@ export class UserController {
     @Param('lastName') lastName: string,
     @Param('email') email: string,
     @Param('password') password: string,
-    @Res() response: Response) {
+    @Res() response: Response
+    ){
+      console.log('CreateDirectly controller');
+      console.log(firstName, lastName, email, password);
     try{
       const user = await this.userService.createDirectly(firstName, lastName, email, password);
       return response.json({
@@ -72,6 +76,8 @@ export class UserController {
       });
     }
     catch (error) {
+      console.log("try catch error 1")
+      
       if (error instanceof ConflictException) {
         return response.json({
           success: false,
@@ -79,6 +85,7 @@ export class UserController {
           messageCode: '704',
         });
       }
+      console.log("try catch error 2")
       return response.json({
         success: false,
         responseData: false,
