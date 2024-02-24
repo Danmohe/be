@@ -121,6 +121,7 @@ export class UserService {
       console.log("trying to create the user");
       createUserDto.password= await this.securityService.hashPassword(createUserDto.password);
       const user = await this.userRepository.create(createUserDto);
+      user.isActivated = true;
       console.log("trying to save user");
       return await this.userRepository.save(user);
     }
