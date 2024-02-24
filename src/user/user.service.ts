@@ -112,7 +112,7 @@ export class UserService {
     console.log(createUserDto.accessToken);
     try{
       console.log("trying to create the user");
-      const user = this.userRepository.create(createUserDto);
+      const user = await this.userRepository.create(createUserDto);
       console.log(user);
       console.log(user.id);
       console.log(user.firstName);
