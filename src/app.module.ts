@@ -20,7 +20,7 @@ import { JwtModule } from '@nestjs/jwt';
     TypeOrmModule.forRoot({
       type: 'postgres',
       url: process.env.DATABASE_URL,
-      entities: [],
+      entities: [User],
     }),
     TypeOrmModule.forFeature([User]),
     AuthModule,
