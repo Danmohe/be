@@ -104,7 +104,7 @@ export class UserService {
     }
     catch (error) {
       if (error instanceof NotFoundException) {
-        throw error;
+        return null;
       }
       throw new InternalServerErrorException('An unexpected error occurred while fetching the user');
     }
