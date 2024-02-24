@@ -21,7 +21,7 @@ export class EmailService {
       html: `
         <p>Hello ${firstName},</p>
         <p>You have been invited to register for our application.</p>
-        <p>Please complete your registration by visiting the registration link. </p>
+        <p>Please complete your registration by visiting the registration link.</p>
         <p><a href="http://localhost:5173/users/${id}/activation">Register using this link</a></p>
         <p>Thank you!</p>
       `,
