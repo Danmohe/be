@@ -21,6 +21,7 @@ import { JwtModule } from '@nestjs/jwt';
       type: 'postgres',
       url: process.env.DATABASE_URL,
       entities: [User],
+      synchronize: true,
     }),
     TypeOrmModule.forFeature([User]),
     AuthModule,
