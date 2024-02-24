@@ -70,7 +70,7 @@ export class UserController {
     console.log(createUserDto.email);
     console.log(createUserDto.firstName);
     console.log(createUserDto.lastName);
-    console.log(createUserDto.password);
+    console.log(createUserDto.password  );
     console.log(createUserDto.accessToken);
     console.log("going into the service");
     

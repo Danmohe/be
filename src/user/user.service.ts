@@ -116,15 +116,13 @@ export class UserService {
     console.log(createUserDto.email);
     console.log(createUserDto.firstName);
     console.log(createUserDto.lastName);
-    console.log(createUserDto.password);
     console.log(createUserDto.accessToken);
     try{
       console.log("trying to create the user");
+      createUserDto.password= await this.securityService.hashPassword(createUserDto.password);
       const user = await this.userRepository.create(createUserDto);
       console.log("trying to save user");
       return await this.userRepository.save(user);
-      
-      
     }
     catch (error) {
       if (error instanceof ConflictException) {
