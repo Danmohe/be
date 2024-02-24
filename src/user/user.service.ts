@@ -101,9 +101,11 @@ export class UserService {
     }
   }
 
-  async createDirectly(createUserDto: CreateUserDto): Promise<User> {
+  async createDirectly(firstName: string, lastName: string, email: string, password: string): Promise<User> {
     try{
-      const user = this.userRepository.create(createUserDto);
+      const hashedPassword= await this.securityService.hashPassword(password);
+      const partialUser = { firstName, lastName, email, password: hashedPassword, isActivated: true };
+      const user = this.userRepository.create(partialUser);
       return await this.userRepository.save(user);
     }
     catch (error) {
