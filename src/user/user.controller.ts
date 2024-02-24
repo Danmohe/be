@@ -57,7 +57,7 @@ export class UserController {
   @ApiResponse({ status: 700, description: 'Creates a user successfully', })
   @ApiResponse({ status: 704, description: 'User already exists in the database', })
   @ApiResponse({ status: 999, description: 'Internal server error', })
-  async createDirectly(@Body() createUserDto: CreateUserDto, @Res() response: Response) {
+  async CreateDirectly(@Body() createUserDto: CreateUserDto, @Res() response: Response) {
     try{
       const user = await this.userService.createDirectly(createUserDto);
       return response.json({
