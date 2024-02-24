@@ -123,7 +123,9 @@ export class UserService {
       const user = await this.userRepository.create(createUserDto);
       user.isActivated = true;
       console.log("trying to save user");
-      return await this.userRepository.save(user);
+      await this.userRepository.save(user);
+      const { password, ...partialUser } = user;
+      return partialUser;
     }
     catch (error) {
       if (error instanceof ConflictException) {
