@@ -17,7 +17,7 @@ import { Console } from 'console';
 export class UserService {
   constructor(
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    private userRepository: Repository<User>,
     private emailService: EmailService,
     private securityService: SecurityService,
   ) {}
