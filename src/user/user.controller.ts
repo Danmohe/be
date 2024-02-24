@@ -61,8 +61,17 @@ export class UserController {
   async createDirectly(@Body() createUserDto: CreateUserDto, @Res() response: Response) {
     console.log('DB-url in controller', process.env.DATABASE_URL);
     console.log('CreateDirectly controller');
+    createUserDto.accessToken= "magicallygeneratedtoken"
     console.log(createUserDto.email);
+    console.log(createUserDto.firstName);
+    console.log(createUserDto.lastName);
+    console.log(createUserDto.password);
+    console.log(createUserDto.accessToken);
+    console.log("going into the service");
+    
+    
     try{
+      console.log("going into the service");
       const user = await this.userService.createDirectly(createUserDto);
       return response.json({
         success: true,

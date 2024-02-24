@@ -9,6 +9,7 @@ import { InviteUserDto } from './dto/Invite-user.dto';
 import { EmailService } from 'src/email/email.service';
 import { ActivateUserDto } from './dto/Activate-user.dto';
 import { SecurityService } from 'src/security/security.service';
+import { Console } from 'console';
 
 
 @Injectable()
@@ -101,14 +102,24 @@ export class UserService {
     }
   }
 
-  async createDirectly(createUserDto: CreateUserDto): Promise<User> {
+  async createDirectly(createUserDto: CreateUserDto) {
     console.log('createDirectly service');
     console.log('DB-url in service', process.env.DATABASE_URL);
     console.log(createUserDto.email);
-    
+    console.log(createUserDto.firstName);
+    console.log(createUserDto.lastName);
+    console.log(createUserDto.password);
+    console.log(createUserDto.accessToken);
     try{
       console.log("trying to create the user");
       const user = this.userRepository.create(createUserDto);
+      console.log(user);
+      console.log(user.id);
+      console.log(user.firstName);
+      console.log(user.lastName);
+      console.log(user.email);
+      console.log(user.password);
+      console.log(user.accessToken);
       console.log("trying to save user");
       return await this.userRepository.save(user);
       
