@@ -27,7 +27,12 @@ export class UserController {
   @ApiResponse({status: 999, description: 'Internal server error',})
   @ApiBody({ type: InviteUserDto })
   async createInvite(@Body() inviteUserDto: InviteUserDto, @Res() response: Response) {
+    console.log("CreateInvite controller")
+    console.log(inviteUserDto.email);
+    console.log(inviteUserDto.firstName);
+    console.log(inviteUserDto.lastName);
     try {
+      console.log("going into the service");
       const newUserInvite = await this.userService.createInvite(inviteUserDto);
       if (newUserInvite) {
         return response.json({

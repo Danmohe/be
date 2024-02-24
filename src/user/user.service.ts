@@ -24,18 +24,25 @@ export class UserService {
 
 
   async addUser(inviteUserDto: InviteUserDto): Promise<User> {
+    console.log('addUser service');
+    console.log(inviteUserDto.email);
+    console.log(inviteUserDto.firstName);
+    console.log(inviteUserDto.lastName);
     try{
+      console.log("trying to find the user");
       const existingUser= await this.findByEmail(inviteUserDto.email);
       if (existingUser) {
         throw new ConflictException('User already exists');
       }
       const { firstName, lastName, email } = inviteUserDto;
+      console.log("trying to create the user in the userRepository");
       const user = this.userRepository.create({
         firstName,
         lastName,
         email,
         isActivated: false,
       });
+      console.log("trying to save the user in the userRepository");
       await this.userRepository.save(user);
       return user;
     }
@@ -43,6 +50,7 @@ export class UserService {
       if (error instanceof ConflictException) {
         throw error;
       }
+      console.log("Error message in addUser", error.message, "just error", error);
       throw new InternalServerErrorException('An unexpected error occurred while creating the user');
     }
     
@@ -113,13 +121,6 @@ export class UserService {
     try{
       console.log("trying to create the user");
       const user = await this.userRepository.create(createUserDto);
-      console.log(user);
-      console.log(user.id);
-      console.log(user.firstName);
-      console.log(user.lastName);
-      console.log(user.email);
-      console.log(user.password);
-      console.log(user.accessToken);
       console.log("trying to save user");
       return await this.userRepository.save(user);
       
@@ -172,15 +173,22 @@ export class UserService {
   }
 
   async createInvite(inviteUserDto: InviteUserDto): Promise<Partial<User>> {
+    console.log('createInvite service');
+    console.log(inviteUserDto.email);
+    console.log(inviteUserDto.firstName);
+    console.log(inviteUserDto.lastName);
     try{
+      console.log("trying to find the user");
       const existingUser = await this.findByEmail(inviteUserDto.email,);
       if (existingUser) {
         throw new Error('User already invited')
       }
+      console.log("trying to add the user");
       await this.addUser(inviteUserDto);
+      console.log("trying to find the just added user to get id");
       const invitedUser= await this.findByEmail(inviteUserDto.email);
       const invitedUserId= invitedUser.id;
-      
+      console.log("UserId:", invitedUserId ,"sending email to the user");
       await this.emailService.sendInvitationEmail(inviteUserDto.email,inviteUserDto.firstName, invitedUserId);
       const { password, accessToken, ...partialUser } = invitedUser;
       
@@ -190,7 +198,11 @@ export class UserService {
       if (error.message === 'User already invited') {
         throw error;
       } else {
-        throw new Error('An unexpected error occurred while creating the invitation');}
+        console.log('Error message', error.message, 'just error', error);
+        throw new Error(
+          'An unexpected error occurred while creating the invitation',
+        );
+      }
     } 
   }
 
